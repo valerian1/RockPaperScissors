@@ -32,21 +32,21 @@ struct ContentView: View {
                 Button(action: {
                     
                 }, label: {
-                    Text("Rock")
+                    Text("Rock ✊")
                         .threeButtons()
                 })
                 
                 Button(action: {
                     
                 }, label: {
-                    Text("Paper")
+                    Text("Paper ✋")
                         .threeButtons()
                 })
                 
                 Button(action: {
                     
                 }, label: {
-                    Text("Scissors")
+                    Text("Scissors ✌️")
                         .threeButtons()
                 })
             }
