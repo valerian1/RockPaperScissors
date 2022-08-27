@@ -81,7 +81,8 @@ struct ContentView: View {
             Spacer()
         }
     }
-     
+    
+    // Game functions
     func buttonTapped(_ number: Int) {
         if number == 0 {
             playerChoice = choice[0]
@@ -151,6 +152,8 @@ struct ContentView: View {
     }
 }
 
+
+// View modifiers
 struct ButtonStyle: ViewModifier {
     @State var buttonColor = Color.blue
     
