@@ -8,50 +8,146 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var overallScore = "Player ? : ? Cpu"
-    @State private var playerChoice = "Unknown"
-    @State private var computerChoice = "Unknown"
-    
-    var playerScore = 0
-    var computerScore = 0
+    @State private var choice = ["Rock ✊", "Paper ✋", "Scissors ✌️"]
+    @State private var playerChoice = ""
+    @State private var enemyChoice = Int.random(in: 0...2)
+    @State private var enemyChose = ""
+    @State private var playerScore = 0
+    @State private var enemyScore = 0
+    @State private var winnerIs = ""
+    @State private var restartButton = false
+    @State private var shouldHide = false
     
     var body: some View {
         VStack {
-            Text(overallScore)
+            Text("Player \(playerScore) : \(enemyScore) Enemy")
                 .titleStyle()
+            VStack {
+                Spacer()
+                Text("\(enemyChose)")
+                    .titleStyle()
+                
+                Spacer()
+                Text(winnerIs)
+                    .font(.largeTitle).bold()
+                // Restart button
+                HStack {
+                    Button(action: {
+                        self.shouldHide = true
+                        restartGame()
+                    }, label: {
+                        Text("Play Again")
+                            .threeButtons()
+                            .opacity(shouldHide ? 1 : 0)
+                    })
+                }
+                Spacer()
+                
+                Text("\(playerChoice)")
+                    .titleStyle()
+                Spacer()
+            }
             
-            Spacer()
-            Text(computerChoice)
-                .titleStyle()
-            Spacer()
-            Text(playerChoice)
-                .titleStyle()
-            Spacer()
             
             HStack {
+                // Play buttons
                 Button(action: {
-                    
+                    self.shouldHide = false
+                    buttonTapped(0)
                 }, label: {
-                    Text("Rock ✊")
+                    Text(choice[0])
                         .threeButtons()
+                        .opacity(shouldHide ? 0 : 1)
                 })
                 
                 Button(action: {
-                    
+                    self.shouldHide = false
+                    buttonTapped(1)
                 }, label: {
-                    Text("Paper ✋")
+                    Text(choice[1])
                         .threeButtons()
+                        .opacity(shouldHide ? 0 : 1)
                 })
                 
                 Button(action: {
-                    
+                    self.shouldHide = false
+                    buttonTapped(2)
                 }, label: {
-                    Text("Scissors ✌️")
+                    Text(choice[2])
                         .threeButtons()
+                        .opacity(shouldHide ? 0 : 1)
                 })
             }
             Spacer()
         }
+    }
+     
+    func buttonTapped(_ number: Int) {
+        if number == 0 {
+            playerChoice = choice[0]
+            
+            if enemyChoice == 0 {
+
+            } else if enemyChoice == 1 {
+                enemyScore += 1
+            } else if enemyChoice == 2 {
+                playerScore += 1
+            }
+             
+        } else if number == 1 {
+            playerChoice = choice[1]
+            
+            if enemyChoice == 0 {
+                playerScore += 1
+
+            } else if enemyChoice == 1 {
+                
+            } else if enemyChoice == 2 {
+                enemyScore += 1
+
+            }
+            
+        } else if number == 2 {
+            playerChoice = choice[2]
+            
+            if enemyChoice == 0 {
+                enemyScore += 1
+            } else if enemyChoice == 1 {
+                playerScore += 1
+            } else if enemyChoice == 2 {
+                
+            }
+        }
+        computerChoose()
+        checkWinner()
+    }
+    
+    func computerChoose() {
+        enemyChose = choice[enemyChoice]
+        enemyChoice = Int.random(in: 0...2)
+    }
+    
+    func checkWinner() {
+        if playerScore == 10 {
+            winnerIs = "YOU WIN"
+            shouldHide = true
+            if playerScore >= 11 {
+                restartGame()
+            }
+        } else if enemyScore == 10 {
+            winnerIs = "YOU LOOSE"
+            shouldHide = true
+            if enemyScore >= 11 {
+                restartGame()
+            }
+        }
+    }
+    
+    func restartGame() {
+        playerScore = 0
+        enemyScore = 0
+        winnerIs = ""
+        shouldHide = false
     }
 }
 
